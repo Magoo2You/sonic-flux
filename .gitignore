@@ -1,0 +1,48 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments (don't commit these!)
+venv/
+ENV/
+env/
+
+# Data files & tokens (sensitive!)
+data/token_store.json
+data/*.db
+data/*.pickle
+data/*.pt
+models/*.pt
+models/*.onnx
+models/*.*.index
+
+# Logs
+logs/*.log
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment variables file (use config files instead)
+.env
+.env.local
+
+# Generated artifacts
+playlists/
+__pycache__/
+*.egg-info/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
