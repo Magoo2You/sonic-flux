@@ -1,0 +1,82 @@
+{
+  "track_patterns": [
+    {
+      "pattern": "paths parameter",
+      "success": false,
+      "error": "HTTPError: 400 Client Error: Bad Request for url: https://openapi.tidal.com/v2/tracks?limit=25&offset=0&path=tidal%3A%2F%2Ftrack%2F37519286",
+      "tracks_count": 0,
+      "http_status": "400"
+    },
+    {
+      "pattern": "ids parameter",
+      "success": false,
+      "error": "HTTPError: 400 Client Error: Bad Request for url: https://openapi.tidal.com/v2/tracks?limit=25&offset=0&ids=37519286",
+      "tracks_count": 0,
+      "http_status": "400"
+    },
+    {
+      "pattern": "GET /tracks/{id}",
+      "success": false,
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://openapi.tidal.com/v2/tracks/37519286"
+    },
+    {
+      "pattern": "GET /tracks (list)",
+      "success": false,
+      "error": "HTTPError: 400 Client Error: Bad Request for url: https://openapi.tidal.com/v2/tracks?limit=25&offset=0"
+    },
+    {
+      "pattern": "GET /tracks (with include)",
+      "success": false,
+      "error": "HTTPError: 400 Client Error: Bad Request for url: https://openapi.tidal.com/v2/tracks?limit=25&offset=0&include=artist"
+    },
+    {
+      "pattern": "paths with simple ID",
+      "success": false,
+      "error": "HTTPError: 400 Client Error: Bad Request for url: https://openapi.tidal.com/v2/tracks?limit=25&offset=0&path=track%2F37519286"
+    }
+  ],
+  "search_patterns": [
+    {
+      "pattern": "search(query, types=[\"tracks\"], limit)",
+      "success": false,
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://openapi.tidal.com/v2/tracks/search?q=Taylor+Swift&limit=3&offset=0&types=tracks"
+    },
+    {
+      "pattern": "search(query, limit, offset)",
+      "success": false,
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://openapi.tidal.com/v2/tracks/search?q=Taylor+Swift&limit=3&offset=0"
+    },
+    {
+      "pattern": "GET /search",
+      "success": false,
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://openapi.tidal.com/v2/search?query=Taylor+Swift&limit=10&offset=0"
+    },
+    {
+      "pattern": "POST /search",
+      "success": false,
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://openapi.tidal.com/v2/search"
+    },
+    {
+      "pattern": "search(query, types=[\"tracks\",\"albums\"])",
+      "success": false,
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://openapi.tidal.com/v2/tracks/search?q=The+Weeknd&limit=10&offset=0&types=tracks%2Calbums"
+    }
+  ],
+  "lookup_patterns": [
+    {
+      "pattern": "GET /artists/{id}",
+      "success": false,
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://openapi.tidal.com/v2/artists/269408853"
+    },
+    {
+      "pattern": "GET /albums/{id}",
+      "success": false,
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://openapi.tidal.com/v2/albums/183962547"
+    }
+  ],
+  "summary": {
+    "total_tested": 13,
+    "successful": 0,
+    "failed": 13
+  }
+}
