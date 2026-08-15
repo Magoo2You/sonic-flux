@@ -2,18 +2,40 @@
 
 ## 🎵 PROJECT OVERVIEW
 
-**Sonic Flux** is a local, privacy-first music discovery engine that uses AI to analyze sonic characteristics of your Amazon Music library and generates personalized playlists based on mood, energy, instrumentation, and other audio features.
+**Sonic Flux** is a **desktop music discovery application** that uses AI to analyze sonic characteristics of your Amazon Music library and generates personalized playlists based on mood, energy, instrumentation, and other audio features. The app then controls your WiiM AMP Ultra stereo via HTTP API to play the generated playlists directly.
 
 ### Core Capabilities
 - ✅ Audio feature analysis (tempo, energy, valence, instrumentalness, etc.)
 - ✅ Playlist generation from Amazon Music library
 - ✅ Local AI processing (no cloud API calls)
-- ✅ WiiM AMP Ultra integration via HTTP API
+- ✅ WiiM AMP Ultra integration via HTTP API (play on stereo)
 - ✅ SQLite-based metadata storage
-- ✅ Privacy-first design
+- ✅ Privacy-first design (everything runs locally)
+- ✅ **Desktop GUI Interface** (visual controls, progress indicators, playlist viewer)
+
+### End Goal Architecture
+```
+┌─────────────────────────────────────────────────────────┐
+│  Sonic Flux Desktop App                                  │
+│                                                          │
+│  [🎵 Select Analysis Plan]                               │
+│     └─ Morning Energy / Late Night Chill / Focus         │
+│                                                          │
+│  [📊 Generate Playlist]                                   │
+│     ├─ Visual progress: "Analyzing 50 songs..."           │
+│     ├─ Preview: Shows selected tracks with metadata      │
+│     └─ Output: Detailed playlist list with Amazon links  │
+│                                                          │
+│  [▶️ Play via WiiM AMP Ultra]                             │
+│     └─ One-click: Switch source → Play on stereo         │
+│                                                          │
+│  [📁 Export Playlist]                                     │
+│     └─ Save as M3U/Spotify SmartPlaylist/Apple Music     │
+└─────────────────────────────────────────────────────────┘
+```
 
 ### Tech Stack
-- Python 3.10+
+- Python 3.10+ with **CustomTkinter** (modern cross-platform GUI)
 - librosa / essentia-python for audio features
 - Amazon Music Web Playback API
 - pywiim for WiiM control
@@ -27,32 +49,27 @@
 
 ```bash
 # Install core dependencies
-pip install librosa essentia-python music21 scikit-learn joblib amazon-music pywiim aiofiles mutagen chromaprint-py
+pip install librosa essentia-python music21 scikit-learn joblib amazon-music pywiim aiofiles mutagen chromaprint-py customtkinter tkinter
 
 # Install development dependencies (optional, for testing)
 pip install pytest pytest-cov black isort flake8 mypy
 ```
 
-### Authentication Setup
-
-```python
-# Run once to authenticate with Amazon Music API
-python src/main.py --auth
-
-# This will:
-# 1. Open browser for OAuth flow
-# 2. Save tokens to data/token_store.json
-# 3. Print success message
-```
-
-### Generate Your First Playlist
+### Desktop App Launch (Once Installed)
 
 ```bash
-python src/main.py --generate "morning-energy" --output playlists/
+cd C:\HermesWiiM
+python src/sonic_flux_app.py
 
-# Output: Generated playlist saved with track IDs
-# Ready to play via WiiM integration
+# First run will launch GUI and request Amazon Music OAuth authentication
 ```
+
+### Authentication Setup
+
+1. Run Sonic Flux app once
+2. Click "Authenticate with Amazon Music"
+3. Browser opens for login (one-time only)
+4. Tokens saved to `data/token_store.json`
 
 ---
 
@@ -62,7 +79,7 @@ python src/main.py --generate "morning-energy" --output playlists/
 C:\HermesWiiM\
 ├── src/
 │   ├── __init__.py              # Package initialization
-│   ├── main.py                  # CLI entry point
+│   ├── sonic_flux_app.py        # Main desktop GUI application (CustomTkinter)
 │   └── modules/
 │       ├── amazon_api.py        # Amazon Music API wrapper
 │       ├── wiim_client.py       # WiiM HTTP API client
@@ -164,17 +181,17 @@ C:\HermesWiiM\
 
 ---
 
-## 🎯 NEXT STEPS
+## 🎯 NEXT STEPS (Desktop GUI Focus)
 
-We'll build this incrementally:
+We'll build this incrementally toward a full desktop GUI app:
 
-1. ✅ **Project Setup Complete** - Folder structure created
-2. ⏭️ **Amazon Music API Integration** - First module to implement
+1. ✅ **Project Setup Complete** - Folder structure created on GitHub
+2. ⏭️ **Amazon Music API Integration** - Core authentication and search
 3. ⏭️ **WiiM HTTP Client** - Control layer implementation
 4. ⏭️ **Audio Feature Extraction** - librosa integration
 5. ⏭️ **Database Schema** - SQLite table creation
 6. ⏭️ **Playlist Generation Logic** - Core algorithm
-7. ⏭️ **CLI Interface** - Command-line entry point
+7. ⏭️ **Desktop GUI Framework** - CustomTkinter interface (Primary goal!)
 8. ⏭️ **Testing & Documentation** - Quality assurance
 
 ---
@@ -197,18 +214,31 @@ tail -f logs/sonic-flux.log
 cat config/config.json
 ```
 
-### For Running:
+### For Running (Desktop App):
 
 ```bash
-# Authenticate with Amazon Music API
-python src/main.py --auth
+cd "C:\HermesWiiM"
+python src/sonic_flux_app.py
 
-# Generate a playlist
-python src/main.py --generate "morning-energy" --output playlists/
-
-# Play generated playlist via WiiM
-python src/main.py --play-playlist "generated_playlist_name"
+# App launches GUI with:
+# - Amazon Music authentication button
+# - Playlist generation controls
+# - WiiM play/pause buttons
+# - Playlist export options
 ```
+
+### For CLI Testing (Optional):
+
+```bash
+cd "C:\HermesWiiM"
+
+# Authenticate with Amazon Music API
+python src/modules/amazon_api.py --auth
+
+# Generate a playlist (CLI test)
+python src/modules/playlist_gen.py --generate "morning-energy"
+```
+
 
 ---
 
